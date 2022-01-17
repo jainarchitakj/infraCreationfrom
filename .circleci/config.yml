@@ -2,6 +2,22 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@2.0.3
 jobs:
+  configure_infrastructure: 
+    docker: 
+     - image: python:3.7-alpine3.11
+    steps: 
+      - checkout
+      - add_ssh_keys:
+              # You can get this ID in the section where you registered the SSH Key
+              fingerprints: ["b5:f8:84:b7:5a:ba:b3:3c:90:e3:1b:b1:ee:a4:4f:80"] 
+      - run:
+          name: Install Ansible
+          command: |
+            apk add --update ansible
+      - run:
+          name: Run Playbook and Configure server
+          command: |
+            ansible-playbook -i inventory-file playbook-file
     #create_infrastructure: 
       #docker:
         #- image: amazon/aws-cli
@@ -17,4 +33,5 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
+      - configure_infrastructure
      # - create_infrastructure
