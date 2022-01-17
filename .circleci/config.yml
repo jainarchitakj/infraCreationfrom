@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Run Playbook and Configure server
           command: |
-            ansible-playbook -i inventory-file main
+            ansible-playbook -i inventory-file main.yml
     #create_infrastructure: 
       #docker:
         #- image: amazon/aws-cli
